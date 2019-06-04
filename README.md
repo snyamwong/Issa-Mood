@@ -10,7 +10,7 @@ Move into git directory
 
 "pip install flask"
 
-"export FLASK_APP=flaskr/_init_.py"
+"export FLASK_APP=flaskr/\_init\_.py"
 
 "flask run"
 
