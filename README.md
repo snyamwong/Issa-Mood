@@ -2,8 +2,11 @@
 
 ## pip list
 
-nltk
-pandas
+* nltk
+
+* pandas
+
+* flask
 
 ## Lexicon
 
@@ -20,8 +23,6 @@ Install Python 3.7.3
 verify installation with "python --version"
 
 Move into git directory
-
-"pip install flask"
 
 "export FLASK_APP=flaskr/\_init\_.py"
 
