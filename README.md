@@ -1,5 +1,18 @@
 # Issa-Mood
 
+## pip list
+
+nltk
+pandas
+
+## Lexicon
+
+The Lexicon used for this project is located here
+
+https://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm
+
+## Running Instructions
+
 clone project with "git clone $URL"
 
 Install Python 3.7.3
