@@ -8,6 +8,8 @@ Python Script that cleans up song lyrics
 
 import nltk
 import string
+import inflection
+import inflect
 
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
@@ -21,7 +23,10 @@ nltk.download('wordnet')
 """
 
 stop_words = set(stopwords.words('english'))
-stop_words.add('ai')
+stop_words.add('ai') # ain't
+stop_words.add('wa') # wasn't
+
+p = inflect.engine()
 
 def readSongLyrics(songpath):
 
@@ -41,12 +46,12 @@ def getFilteredText(blob):
         text = TextBlob(sentence)
 
         # cleaning the words
-        words = [w.singularize().lower().translate(str.maketrans('', '', string.punctuation)) for w in text.words]
+        words = [w.lower().translate(str.maketrans('', '', string.punctuation)) for w in text.words]
 
         # filter out words
         filtered_text = [w for w in words if not w in stop_words]
 
-        filtered_text = ' '.join(str(word) for word in filtered_text if len(word) > 0)
+        filtered_text = ' '.join(str(word) if(p.singular_noun(str(word))) else inflection.singularize(str(word)) for word in filtered_text if len(word) > 0)
 
         result.append(filtered_text)
 
