@@ -24,6 +24,10 @@ verify installation with "python --version"
 
 Move into git directory
 
+"pip install flask"
+
+". /venv/Scripts/activate"
+
 "export FLASK_APP=flaskr/\_init\_.py"
 
 "flask run"
