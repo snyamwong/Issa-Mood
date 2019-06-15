@@ -6,11 +6,11 @@
 
 * pandas
 
-*bs4
+* bs4
 
-*requests
+* requests
 
-*WTForms
+* WTForms
 
 * flask
 
