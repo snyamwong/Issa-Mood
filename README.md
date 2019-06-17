@@ -6,6 +6,12 @@
 
 * pandas
 
+* bs4
+
+* requests
+
+* WTForms
+
 * flask
 
 ## Lexicon
