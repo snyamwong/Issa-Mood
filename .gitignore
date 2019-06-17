@@ -1,6 +1,5 @@
 NRC-Emotion-Lexicon-v0.92
 song
-__pycache__
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -126,3 +125,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+*.pyc
+flaskr/__pycache__/_init_.cpython-37.pyc
