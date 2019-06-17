@@ -37,6 +37,7 @@ def GetLyrics(song_title,artist_name):
   else:
     for hit in json["response"]["hits"]:
       if hit["result"]["primary_artist"]["name"] == artist_name:
+        GetLyrics.artist = artist_name
         song_info = hit
       break
   if song_info:
