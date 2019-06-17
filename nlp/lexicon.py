@@ -15,6 +15,4 @@ class Lexicon:
         self.df = pd.read_csv(filepath, names = ['word', 'emotion', 'association'], skiprows = 1, sep = '	')
 
     def wordAssociation(self, word):
-        return self.df[(lexicon.df.word == word) & (lexicon.df.association == 1)].emotion.tolist()
-
-lexicon = Lexicon()
+        return self.df[(self.df.word == word) & (self.df.association == 1)].emotion.tolist()
