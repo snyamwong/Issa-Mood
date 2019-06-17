@@ -55,6 +55,7 @@ def create_app(test_config=None):
         if results != None:
             #this method variable is to be passed to the results page so it can display artist name
             artist_string = GetLyrics.artist
+            song_string = GetLyrics.song
             return render_template('results.html', lyrics=results,songTitle=song_string,artistName=artist_string)
         else:
             flash('No results found!')

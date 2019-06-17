@@ -42,6 +42,7 @@ def GetLyrics(song_title,artist_name):
     if hit["result"]["primary_artist"]["name"] == artist_name:
       #stores method variable to be sent later to results page
       GetLyrics.artist = artist_name
+      GetLyrics.song = hit["result"]["title"]
       song_info = hit
       break
   #if theres a hit stored, get the path and call method to web scrape lyrics
