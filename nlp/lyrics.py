@@ -58,22 +58,20 @@ class Lyrics:
 
         for sentence in blob:
             text = TextBlob(sentence)
-
             words = []
-            for w in text.words:
-                # remove Genius tags here
-                if ('[' in w):
-                    pass
 
-                w = w.lemmatize('n')
-                w = w.lower()
-                w = w.translate(str.maketrans('', '', string.punctuation))
+            # ignore any Genius tags 
+            if ('[' not in sentence):
+                for w in text.words:
+                    w = w.lemmatize('n')
+                    w = w.lower()
+                    w = w.translate(str.maketrans('', '', string.punctuation))
 
-                if(w not in self.stop_words and not w.isdigit()):
-                    words.append(w)
+                    if(w not in self.stop_words and not w.isdigit()):
+                        words.append(w)
 
-            if len(words) > 0:
-                filtered_lyrics.append(' '.join(w for w in words))
+                if len(words) > 0:
+                    filtered_lyrics.append(' '.join(w for w in words))
 
         return filtered_lyrics
 
