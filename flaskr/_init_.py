@@ -42,7 +42,7 @@ def create_app(test_config=None):
         if search_type == "Song Name & Artist":
             artist_string = search.data['artistSearch']
 
-        print(search_type, file=sys.stderr)
+       # print(search_type, file=sys.stderr)
         results = GetLyrics(song_string,artist_string)
         if results != None:
             artist_string = GetLyrics.artist

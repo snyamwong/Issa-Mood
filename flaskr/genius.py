@@ -16,7 +16,7 @@ def lyrics_from_song_api_path(song_api_path):
  
   [h.extract() for h in html('script')]
   lyrics = html.find("div", class_="lyrics").get_text() 
-  lyrics.replace('\n', ' ')
+  #lyrics.replace('\n', ' ')
   return lyrics
 
 def GetLyrics(song_title,artist_name):
@@ -30,7 +30,7 @@ def GetLyrics(song_title,artist_name):
   song_info = None
   if artist_name == "":
     for hit in json["response"]["hits"]:
-      if hit["result"]["title"]== song_title:
+      if hit["result"]["title"].lower()== song_title.lower():
         GetLyrics.artist = hit["result"]["primary_artist"]["name"]
         song_info = hit
       break
