@@ -29,25 +29,33 @@ def create_app(test_config=None):
 
     @app.route('/home', methods=['GET','POST'])
     def home():
+        #SongSearch is the form from forms.py where all the form data is stored
         search = SongSearch(request.form)
         if request.method == 'POST':
+            #this calls the results template and genius API from genius.py/GetLyrics
             return search_results(search)
 
         return render_template('home.html', form=search)
 
     @app.route('/results')
     def search_results(search):
+        #this is the stored value for dropdown either: Song Name or Song Name & Artist
         search_type = search.data['select']
+        #Name of the song to search for
         song_string = search.data['songSearch']
         artist_string = ""
+        #If user is searching by Song & Artist, store a value in artist_string
         if search_type == "Song Name & Artist":
             artist_string = search.data['artistSearch']
-
        # print(search_type, file=sys.stderr)
+
+       #GetLyrics is the genius/bs4 call to get lyrics from genius.py
         results = GetLyrics(song_string,artist_string)
+        #if results exist, render the page and information, else flash on home page "no results"
         if results != None:
+            #this method variable is to be passed to the results page so it can display artist name
             artist_string = GetLyrics.artist
-            return render_template('results.html', lyrics=GetLyrics(song_string,artist_string),songTitle=song_string,artistName=artist_string)
+            return render_template('results.html', lyrics=results,songTitle=song_string,artistName=artist_string)
         else:
             flash('No results found!')
             return redirect('/home')
