@@ -1,5 +1,5 @@
 import os
-
+import sys
 from flask import Flask, flash, render_template, request, redirect
 from forms import SongSearch
 from genius import GetLyrics
@@ -36,17 +36,20 @@ def create_app(test_config=None):
 
     @app.route('/results')
     def search_results(search):
-        results = []
-        search_string = search.data['search']
-       # artist_string = search.data['search']
-        return render_template('results.html', results=GetLyrics(search_string),songTitle=search_string)
-     
-        if search.data['search'] == '':
-           flash('No results found!')
-           return redirect('/home')
-        if not results:
-          flash('No results found!')
-          return redirect('/home')
+        search_type = search.data['select']
+        song_string = search.data['songSearch']
+        artist_string = ""
+        if search_type == "Song Name & Artist":
+            artist_string = search.data['artistSearch']
+
+        print(search_type, file=sys.stderr)
+        results = GetLyrics(song_string,artist_string)
+        if results != None:
+            artist_string = GetLyrics.artist
+            return render_template('results.html', lyrics=GetLyrics(song_string,artist_string),songTitle=song_string,artistName=artist_string)
+        else:
+            flash('No results found!')
+            return redirect('/home')
 
     @app.route('/graphs')
     def graphs():

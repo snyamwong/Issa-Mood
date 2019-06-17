@@ -19,19 +19,25 @@ def lyrics_from_song_api_path(song_api_path):
   lyrics.replace('\n', ' ')
   return lyrics
 
-def GetLyrics(song_title):
+def GetLyrics(song_title,artist_name):
   song_title = song_title
-  #artist_name = "Lil Nas X"
+  artist_name = artist_name
 
   search_url = base_url + "/search"
   data = {'q': song_title}
   response = requests.get(search_url, data=data, headers=headers)
   json = response.json()
   song_info = None
-  for hit in json["response"]["hits"]:
-   # if hit["result"]["primary_artist"]["name"] == artist_name:
-    if hit["result"]["title"] == song_title:
-      song_info = hit
+  if artist_name == "":
+    for hit in json["response"]["hits"]:
+      if hit["result"]["title"]== song_title:
+        GetLyrics.artist = hit["result"]["primary_artist"]["name"]
+        song_info = hit
+      break
+  else:
+    for hit in json["response"]["hits"]:
+      if hit["result"]["primary_artist"]["name"] == artist_name:
+        song_info = hit
       break
   if song_info:
     song_api_path = song_info["result"]["api_path"]
