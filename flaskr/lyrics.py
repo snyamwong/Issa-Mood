@@ -56,11 +56,11 @@ class Lyrics:
 
         filtered_lyrics = []
 
-        for sentence in blob:
+        for sentence in blob.split('\n'):
             text = TextBlob(sentence)
             words = []
 
-            # ignore any Genius tags 
+            # ignore any Genius tags
             if ('[' not in sentence):
                 for w in text.words:
                     w = w.lemmatize('n')
