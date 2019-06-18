@@ -6,12 +6,14 @@ Using Association Approach
 Using Intensity Approach
 """
 
-filepath = '../NRC-Emotion-Lexicon-v0.92/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt'
+filepath = 'NRC-Emotion-Lexicon-v0.92/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt'
 
+import os
 import pandas as pd
 
 class Lexicon:
     def __init__(self):
+        print(os.getcwd())
         self.df = pd.read_csv(filepath, names = ['word', 'emotion', 'association'], skiprows = 1, sep = '	')
 
     def wordAssociation(self, word):
