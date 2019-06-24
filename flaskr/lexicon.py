@@ -1,20 +1,28 @@
 """
-Using Association Approach
-1. Go through the song lyrics sentence by sentence
-2. Clean each string, from plural to singular, remove apostrophe, lowercase the string
-
-Using Intensity Approach
+Python class for handling all lexicon related functionalities
 """
 
-filepath = 'NRC-Emotion-Lexicon-v0.92/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt'
-
-import os
 import pandas as pd
 
-class Lexicon:
-    def __init__(self):
-        print(os.getcwd())
-        self.df = pd.read_csv(filepath, names = ['word', 'emotion', 'association'], skiprows = 1, sep = '	')
+FILEPATH = 'NRC-Emotion-Lexicon-v0.92/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt'
 
-    def wordAssociation(self, word):
-        return self.df[(self.df.word == word) & (self.df.association == 1)].emotion.tolist()
+class Lexicon:
+    """
+    Class to look up words in the NRC Lexicon.
+    """
+    def __init__(self):
+        """
+        """
+        columns = ['word', 'emotion', 'association']
+
+        self.lex = pd.read_csv(FILEPATH, names=columns, skiprows=1, sep='	')
+
+    def word_association(self, word):
+        """
+        Given a word, return a list of associated emotions.
+        """
+        return self.lex[(self.lex.word == word) & (self.lex.association == 1)].emotion.tolist()
+
+    def __regex_word(self, word):
+        """
+        """

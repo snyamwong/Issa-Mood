@@ -6,9 +6,9 @@ from flask import Flask, flash, render_template, request, redirect
 from forms import SongSearch
 from genius import GetLyrics
 
-lyrics = Lyrics()
-
 def create_app(test_config=None):
+    """
+    """
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
@@ -29,7 +29,7 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    @app.route('/home', methods=['GET','POST'])
+    @app.route('/home', methods=['GET', 'POST'])
     def home():
         #SongSearch is the form from forms.py where all the form data is stored
         search = SongSearch(request.form)
@@ -41,6 +41,7 @@ def create_app(test_config=None):
 
     @app.route('/results')
     def search_results(search):
+        lyrics = Lyrics()
         #this is the stored value for dropdown either: Song Name or Song Name & Artist
         search_type = search.data['select']
         #Name of the song to search for
@@ -51,22 +52,24 @@ def create_app(test_config=None):
             artist_string = search.data['artistSearch']
        # print(search_type, file=sys.stderr)
 
-       #GetLyrics is the genius/bs4 call to get lyrics from genius.py
-        results = GetLyrics(song_string,artist_string)
+        #GetLyrics is the genius/bs4 call to get lyrics from genius.py
+        results = GetLyrics(song_string, artist_string)
         #if results exist, render the page and information, else flash on home page "no results"
-        if results != None:
+        if results is not None:
             #this method variable is to be passed to the results page so it can display artist name
             artist_string = GetLyrics.artist
             song_string = GetLyrics.song
+            filtered_lyrics = lyrics.filter_lyrics(results)
+            emotions = lyrics.get_lyrics_emotions(filtered_lyrics)
             print(results, file=sys.stderr)
-            filtered_lyrics = lyrics.filterLyrics(results)
-
-            emotions = lyrics.getLyricsEmotions(filtered_lyrics)
             print(emotions, file=sys.stderr)
-            return render_template('results.html', lyrics=results,songTitle=song_string,artistName=artist_string,emotions=dict(emotions))
-        else:
-            flash('No results found!')
-            return redirect('/home')
+            return render_template('results.html',
+                                   lyrics=results,
+                                   songTitle=song_string,
+                                   artistName=artist_string,
+                                   emotions=dict(emotions))
+        flash('No results found!')
+        return redirect('/home')
 
     @app.route('/graphs')
     def graphs():
