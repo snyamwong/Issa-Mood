@@ -1,10 +1,8 @@
 """
-Python Script that cleans up song lyrics
+Python class that cleans up song lyrics
 
-# TODO: needs to clean out whatever Genius web scrapping returns
 # TODO: 2-grams
 # TODO: improve timing
-# TODO: documentation oof
 # TODO: Text reduction to improve timing(?)
 
 things you need to download
@@ -14,16 +12,16 @@ nltk.download('brown')
 nltk.download('wordnet')
 """
 
-import threading
-import nltk
-import string
-
 from collections import defaultdict
-from lexicon import Lexicon
-from nltk.corpus import stopwords
+import string
 from textblob import TextBlob
+from nltk.corpus import stopwords
+from lexicon import Lexicon
 
 class Lyrics:
+    """
+    Class for cleaning, and creating a dictionary of emotions for lyrics
+    """
     def __init__(self):
         self.lexicon = Lexicon()
 
@@ -36,24 +34,12 @@ class Lyrics:
         self.stop_words.add('wo') # won't
         self.stop_words.add('m')
 
-    """
+        # add curse words here
 
-    """
-    def readSongLyrics(self, songpath):
-
-        lyrics = []
-
-        with open(songpath, 'r') as file:
-            for line in file:
-                lyrics.append(line)
-
-        return lyrics
-
-    """
-
-    """
-    def filterLyrics(self, blob):
-
+    def filter_lyrics(self, blob):
+        """
+        Given a blob of lyrics, filter out unncessary words
+        """
         filtered_lyrics = []
 
         for sentence in blob.split('\n'):
@@ -61,32 +47,43 @@ class Lyrics:
             words = []
 
             # ignore any Genius tags
-            if ('[' not in sentence):
-                for w in text.words:
-                    w = w.lemmatize('n')
-                    w = w.lower()
-                    w = w.translate(str.maketrans('', '', string.punctuation))
+            if '[' not in sentence:
+                for word in text.words:
+                    word = word.lemmatize('n')
+                    word = word.lower()
+                    word = word.translate(str.maketrans('', '', string.punctuation))
 
-                    if(w not in self.stop_words and not w.isdigit()):
-                        words.append(w)
+                    if(word not in self.stop_words and not word.isdigit()):
+                        words.append(word)
 
-                if len(words) > 0:
-                    filtered_lyrics.append(' '.join(w for w in words))
+                if words:
+                    filtered_lyrics.append(words)
 
         return filtered_lyrics
 
-    """
-
-    """
-    def getLyricsEmotions(self, lyrics):
-
+    def get_lyrics_emotions(self, lyrics):
+        """
+        Given filtered lyrics, return a dictionary of emotions
+        """
         emotion_dict = defaultdict(int)
 
         for sentence in lyrics:
-            for word in sentence.split():
-                emotions = self.lexicon.wordAssociation(word)
+            for word in sentence:
+                emotions = self.lexicon.word_association(word)
 
                 for emo in emotions:
                     emotion_dict[emo] += 1
 
         return emotion_dict
+
+def read_song_lyrics_from_file(songpath):
+    """
+    For testing purposes, reads lyrics from a file
+    """
+    lyrics = []
+
+    with open(songpath, 'r') as file:
+        for line in file:
+            lyrics.append(line)
+
+    return lyrics
