@@ -14,6 +14,8 @@
 
 * flask
 
+* textblob
+
 ## Lexicon
 
 The Lexicon used for this project is located here
@@ -30,7 +32,7 @@ verify installation with "python --version"
 
 Move into git directory
 
-"pip install flask"
+install all the pip packages in pip list above (e.x pip install flask)
 
 ". /venv/Scripts/activate"
 
