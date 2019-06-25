@@ -5,6 +5,7 @@ from lyrics import Lyrics
 from flask import Flask, flash, render_template, request, redirect
 from forms import SongSearch
 from genius import GetLyrics
+import time
 
 def create_app(test_config=None):
     """
@@ -59,10 +60,13 @@ def create_app(test_config=None):
             #this method variable is to be passed to the results page so it can display artist name
             artist_string = GetLyrics.artist
             song_string = GetLyrics.song
+            #time0 = time.time()
             filtered_lyrics = lyrics.filter_lyrics(results)
             emotions = lyrics.get_lyrics_emotions(filtered_lyrics)
-            print(results, file=sys.stderr)
-            print(emotions, file=sys.stderr)
+            #time1 = time.time()
+            #print(results, file=sys.stderr)
+            #print(emotions, file=sys.stderr)
+            #print(time1 - time0, file=sys.stderr)
             return render_template('results.html',
                                    lyrics=results,
                                    songTitle=song_string,
