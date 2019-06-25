@@ -8,7 +8,7 @@ FILEPATH = 'NRC-Emotion-Lexicon-v0.92/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt'
 
 class Lexicon:
     """
-    Class to look up words in the NRC Lexicon.
+    Class to look up words in the NRC Lexicon, as well as all stop words
     """
     def __init__(self):
         """
@@ -17,12 +17,17 @@ class Lexicon:
 
         self.lex = pd.read_csv(FILEPATH, names=columns, skiprows=1, sep='	')
 
-    def word_association(self, word):
+    def word_association(self, words):
         """
         Given a word, return a list of associated emotions.
         """
-        return self.lex[(self.lex.word == word) & (self.lex.association == 1)].emotion.tolist()
+        associated_emos = self.lex.loc[(self.lex['word'].isin(words)) & (self.lex.association == 1)]
 
-    def __regex_word(self, word):
+        return associated_emos.emotion.tolist()
+
+    def is_stop_word(self, word):
         """
+        Checks if the word is a stop_word
+
+        Includes infanity (too much ambiguity, )
         """

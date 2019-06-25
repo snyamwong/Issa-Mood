@@ -4,6 +4,7 @@ Python class that cleans up song lyrics
 # TODO: 2-grams
 # TODO: improve timing
 # TODO: Text reduction to improve timing(?)
+# TODO: filter out any non English words
 
 things you need to download
 nltk.download('stopwords')
@@ -68,11 +69,10 @@ class Lyrics:
         emotion_dict = defaultdict(int)
 
         for sentence in lyrics:
-            for word in sentence:
-                emotions = self.lexicon.word_association(word)
+            emotions = self.lexicon.word_association(sentence)
 
-                for emo in emotions:
-                    emotion_dict[emo] += 1
+            for emo in emotions:
+                emotion_dict[emo] += 1
 
         return emotion_dict
 
