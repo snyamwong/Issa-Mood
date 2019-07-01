@@ -1,21 +1,32 @@
 """
-Python class for handling all lexicon related functionalities
+Lexicon module
 """
 
+from nltk.corpus import stopwords
 import pandas as pd
 
-FILEPATH = 'NRC-Emotion-Lexicon-v0.92/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt'
+NRC_FILEPATH = 'lexicon/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt'
+BAD_WORD_FILEPATH = 'lexicon/bad-words.txt'
 
 class Lexicon:
     """
-    Class to look up words in the NRC Lexicon, as well as all stop words
+    Class for all things related to a lexicon (stop words, NRC lexion, etc)
     """
     def __init__(self):
-        """
-        """
         columns = ['word', 'emotion', 'association']
 
-        self.lex = pd.read_csv(FILEPATH, names=columns, skiprows=1, sep='	')
+        self.lex = pd.read_csv(NRC_FILEPATH, names=columns, skiprows=1, sep='	')
+
+        self.curse = pd.read_fwf(BAD_WORD_FILEPATH, names=['word'], skiprows=1)
+
+        self.stop_words = set(stopwords.words('english'))
+
+        # words left over from lemmatize
+        self.stop_words.add('ai') # ain't
+        self.stop_words.add('wa') # wasn't
+        self.stop_words.add('ca') # can't
+        self.stop_words.add('wo') # won't
+        self.stop_words.add('m')
 
     def word_association(self, words):
         """
@@ -28,6 +39,9 @@ class Lexicon:
     def is_stop_word(self, word):
         """
         Checks if the word is a stop_word
-
-        Includes infanity (too much ambiguity, )
         """
+
+        if (word.isdigit() or word in self.stop_words or (self.curse['word'] == word).any()):
+            return True
+
+        return False

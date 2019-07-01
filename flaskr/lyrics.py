@@ -5,6 +5,8 @@ Python class that cleans up song lyrics
 # TODO: improve timing
 # TODO: Text reduction to improve timing(?)
 # TODO: filter out any non English words
+# TODO: Data Structure, namedtuple(?)
+# (sentence (String), filtered sentence (String), associated emotions (dictionary))
 
 things you need to download
 nltk.download('stopwords')
@@ -16,7 +18,6 @@ nltk.download('wordnet')
 from collections import defaultdict
 import string
 from textblob import TextBlob
-from nltk.corpus import stopwords
 from lexicon import Lexicon
 
 class Lyrics:
@@ -25,17 +26,6 @@ class Lyrics:
     """
     def __init__(self):
         self.lexicon = Lexicon()
-
-        self.stop_words = set(stopwords.words('english'))
-
-        # words left over from lemmatize
-        self.stop_words.add('ai') # ain't
-        self.stop_words.add('wa') # wasn't
-        self.stop_words.add('ca') # can't
-        self.stop_words.add('wo') # won't
-        self.stop_words.add('m')
-
-        # add curse words here
 
     def filter_lyrics(self, blob):
         """
@@ -54,7 +44,7 @@ class Lyrics:
                     word = word.lower()
                     word = word.translate(str.maketrans('', '', string.punctuation))
 
-                    if(word not in self.stop_words and not word.isdigit()):
+                    if not self.lexicon.is_stop_word(word):
                         words.append(word)
 
                 if words:
@@ -86,4 +76,4 @@ def read_song_lyrics_from_file(songpath):
         for line in file:
             lyrics.append(line)
 
-    return lyrics
+    return '\n'.join(lyrics)
