@@ -61,7 +61,7 @@ class Lyrics:
 
     def get_lyrics_emotions(self, lyrics):
         """
-        Given filtered lyrics, return a dictionary of emotions
+        Given filtered lyrics, return a dictionary of emotions that corresponds to each sentence
 
         # TODO: put filter lyrics in here instead, then just have this return the namedtuple
         instead of making two function calls in lyrics
@@ -79,15 +79,23 @@ class Lyrics:
 
             lyrics_emotions.append(clump)
 
-        print(lyrics_emotions, file=sys.stderr)
-
         return lyrics_emotions
 
     def get_agg_emotions(self, lyrics):
         """
+        Given filtered lyrics, return a dictionary of emotions of the entire song
         """
-        # agg_emotions = Counter()
-        # agg_emotions = agg_emotions + emotions
+
+        lyrics_dict = Counter()
+
+        for clump in lyrics:
+            emotions = self.lexicon.word_association(clump.filtered)
+
+            emotions = Counter(emotions.T.to_dict('records')[0])
+
+            lyrics_dict += emotions
+
+        return lyrics_dict
 
 def read_song_lyrics_from_file(songpath):
     """
