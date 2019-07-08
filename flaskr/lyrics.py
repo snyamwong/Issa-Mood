@@ -15,10 +15,16 @@ nltk.download('brown')
 nltk.download('wordnet')
 """
 
+from collections import Counter
 from collections import defaultdict
+from collections import namedtuple
+import sys
 import string
+import operator
 from textblob import TextBlob
 from lexicon import Lexicon
+
+Clump = namedtuple('Clump', 'original filtered emotion')
 
 class Lyrics:
     """
@@ -31,13 +37,15 @@ class Lyrics:
         """
         Given a blob of lyrics, filter out unncessary words
         """
-        filtered_lyrics = []
+
+        lyrics = []
 
         for sentence in blob.split('\n'):
             text = TextBlob(sentence)
-            words = []
+            filtered = []
 
             # ignore any Genius tags
+            # type pre process - word, post process - str
             if '[' not in sentence:
                 for word in text.words:
                     word = word.lemmatize('n')
@@ -45,26 +53,49 @@ class Lyrics:
                     word = word.translate(str.maketrans('', '', string.punctuation))
 
                     if not self.lexicon.is_stop_word(word):
-                        words.append(word)
+                        filtered.append(word)
 
-                if words:
-                    filtered_lyrics.append(words)
+                lyrics.append(Clump(original=sentence, filtered=filtered, emotion=defaultdict(int)))
 
-        return filtered_lyrics
+        return lyrics
 
     def get_lyrics_emotions(self, lyrics):
         """
-        Given filtered lyrics, return a dictionary of emotions
+        Given filtered lyrics, return a dictionary of emotions that corresponds to each sentence
+
+        # TODO: put filter lyrics in here instead, then just have this return the namedtuple
+        instead of making two function calls in lyrics
+
         """
-        emotion_dict = defaultdict(int)
 
-        for sentence in lyrics:
-            emotions = self.lexicon.word_association(sentence)
+        lyrics_emotions = []
 
-            for emo in emotions:
-                emotion_dict[emo] += 1
+        for clump in lyrics:
+            emotions = self.lexicon.word_association(clump.filtered)
 
-        return emotion_dict
+            emotions = Counter(emotions.T.to_dict('records')[0])
+
+            clump = Clump(original=clump.original, filtered=clump.filtered, emotion=emotions)
+
+            lyrics_emotions.append(clump)
+
+        return lyrics_emotions
+
+    def get_agg_emotions(self, lyrics):
+        """
+        Given filtered lyrics, return a dictionary of emotions of the entire song
+        """
+
+        lyrics_dict = Counter()
+
+        for clump in lyrics:
+            emotions = self.lexicon.word_association(clump.filtered)
+
+            emotions = Counter(emotions.T.to_dict('records')[0])
+
+            lyrics_dict += emotions
+
+        return lyrics_dict
 
 def read_song_lyrics_from_file(songpath):
     """
@@ -77,3 +108,13 @@ def read_song_lyrics_from_file(songpath):
             lyrics.append(line)
 
     return '\n'.join(lyrics)
+
+def combine_dicts(a, b, op=operator.add):
+
+    if a and b:
+        print('you played yourself', file=sys.stderr)
+
+        return dict()
+
+    return dict(a.items() + b.items() +
+                [(k, op(a[k], b[k])) for k in set(b) & set(a)])
