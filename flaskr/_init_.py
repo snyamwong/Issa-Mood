@@ -4,7 +4,7 @@ import pickle
 from lyrics import Lyrics
 from flask import Flask, flash, render_template, request, redirect
 from forms import Song_search
-from genius import get_lyrics
+from genius import Genius
 import time
 
 def create_app(test_config=None):
@@ -43,6 +43,7 @@ def create_app(test_config=None):
     @app.route('/results')
     def search_results(search):
         lyrics = Lyrics()
+        genius = Genius()
         #this is the stored value for dropdown either: Song Name or Song Name & Artist
         search_type = search.data['select']
         #Name of the song to search for
@@ -54,16 +55,17 @@ def create_app(test_config=None):
        # print(search_type, file=sys.stderr)
 
         #GetLyrics is the genius/bs4 call to get lyrics from genius.py
-        results = get_lyrics(song_string, artist_string)
+        results = genius.get_lyrics(song_string, artist_string)
         #if results exist, render the page and information, else flash on home page "no results"
         if results is not None:
             #this method variable is to be passed to the results page so it can display artist name
-            artist_string = get_lyrics.artist
-            song_string = get_lyrics.song
-            album_img = get_lyrics.album_img
+            artist_string = genius.artist
+            song_string = genius.song
+            album_img_string = genius.album_img
             #time0 = time.time()
             filtered_lyrics = lyrics.filter_lyrics(results)
             emotions = lyrics.get_lyrics_emotions(filtered_lyrics)
+            
             #time1 = time.time()
             #print(results, file=sys.stderr)
             #print(emotions, file=sys.stderr)
@@ -72,7 +74,7 @@ def create_app(test_config=None):
                                    lyrics=results,
                                    songTitle=song_string,
                                    artistName=artist_string,
-                                   album_img=album_img,
+                                   album_img=album_img_string,
                                    emotions=emotions)
         flash('No results found!')
         return redirect('/home')
