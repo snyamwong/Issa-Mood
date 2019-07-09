@@ -18,9 +18,7 @@ nltk.download('wordnet')
 from collections import Counter
 from collections import defaultdict
 from collections import namedtuple
-import sys
 import string
-import operator
 from textblob import TextBlob
 from lexicon import Lexicon
 
@@ -46,14 +44,15 @@ class Lyrics:
 
             # ignore any Genius tags
             # type pre process - word, post process - str
-            if '[' not in sentence:
-                for word in text.words:
-                    word = word.lemmatize('n')
-                    word = word.lower()
-                    word = word.translate(str.maketrans('', '', string.punctuation))
+            if '[' not in sentence and sentence:
+                for index, word in enumerate(text.words):
+                    word = clean_word(word)
 
                     if not self.lexicon.is_stop_word(word):
-                        filtered.append(word)
+                        if index > 0 and "n't" in text.words[index - 1]:
+                            filtered.append('nt-' + word)
+                        else:
+                            filtered.append(word)
 
                 lyrics.append(Clump(original=sentence, filtered=filtered, emotion=defaultdict(int)))
 
@@ -108,12 +107,13 @@ def read_song_lyrics_from_file(songpath):
 
     return '\n'.join(lyrics)
 
-def combine_dicts(a, b, op=operator.add):
+def clean_word(word):
+    """
+    Cleans up the word and reduce it to its stem form.
+    """
 
-    if a and b:
-        print('you played yourself', file=sys.stderr)
+    word = word.lemmatize()
+    word = word.lower()
+    word = word.translate(str.maketrans('', '', string.punctuation))
 
-        return dict()
-
-    return dict(a.items() + b.items() +
-                [(k, op(a[k], b[k])) for k in set(b) & set(a)])
+    return word
