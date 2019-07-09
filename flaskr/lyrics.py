@@ -1,12 +1,7 @@
 """
 Python class that cleans up song lyrics
 
-# TODO: 2-grams
 # TODO: improve timing
-# TODO: Text reduction to improve timing(?)
-# TODO: filter out any non English words
-# TODO: Data Structure, namedtuple(?)
-# (sentence (String), filtered sentence (String), associated emotions (dictionary))
 
 things you need to download
 nltk.download('stopwords')
@@ -36,6 +31,7 @@ class Lyrics:
         Given a blob of lyrics, filter out unncessary words
         """
 
+        # a list of CLump namedtuples
         lyrics = []
 
         for sentence in blob.split('\n'):
@@ -46,9 +42,11 @@ class Lyrics:
             # type pre process - word, post process - str
             if '[' not in sentence and sentence:
                 for index, word in enumerate(text.words):
+                    # TODO: have it so that it doesn't clean EVERY word (a pretty expensive function)
                     word = clean_word(word)
 
                     if not self.lexicon.is_stop_word(word):
+                        # a window sliding algo that just checks if previous word is a negation
                         if index > 0 and "n't" in text.words[index - 1]:
                             filtered.append('nt-' + word)
                         else:

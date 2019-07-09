@@ -5,8 +5,8 @@ Lexicon module
 from nltk.corpus import stopwords
 import pandas as pd
 
-NRC_FILEPATH = '../lexicon/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt'
-BAD_WORD_FILEPATH = '../lexicon/bad-words.txt'
+NRC_FILEPATH = 'lexicon/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt'
+BAD_WORD_FILEPATH = 'lexicon/bad-words.txt'
 
 class Lexicon:
     """
@@ -32,18 +32,20 @@ class Lexicon:
     def word_association(self, words):
         """
         # TODO: can most likely clean this up as a one dataframe call tbh
-        Given a word, return a list of associated emotions.
+        Given a word, return a df of associated emotions.
         """
         negated_words = []
         true_words = []
 
+        # this is to split up negated words into their own list, which will contain a '-'
         for word in words:
             if '-' in word:
                 negated_words.append(word.split('-')[1])
             else:
                 true_words.append(word)
 
-        neg_emo = self.lex.loc[(self.lex['word'].isin(negated_words)) & (self.lex.association == 0)].copy()
+        # taking all non associated emotions
+        neg_emo = self.lex.loc[(self.lex['word'].isin(negated_words)) & (self.lex.association == 0)]
 
         neg_emo.loc[:, 'association'] = 1
 
