@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lyric Results</title>
+</head>
+<body>
+  <img src = {{album_img}}>
+
+  <h1>{{songTitle}}</h1>
+  <h2>By: {{artistName}}</h2>
+
+  {% autoescape false %}
+    <p>{{lyrics.replace('\n', '<br>')}}</p>
+  {% endautoescape %}
+
+  <p>{{emotions}}</p>
+</body>
+</html>
