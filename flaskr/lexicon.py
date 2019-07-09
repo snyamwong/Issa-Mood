@@ -34,7 +34,7 @@ class Lexicon:
         """
         associated_emos = self.lex.loc[(self.lex['word'].isin(words)) & (self.lex.association == 1)]
 
-        return associated_emos.emotion.tolist()
+        return associated_emos.groupby('emotion').sum()
 
     def is_stop_word(self, word):
         """

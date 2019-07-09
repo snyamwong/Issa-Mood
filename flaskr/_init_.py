@@ -72,8 +72,12 @@ def create_app(test_config=None):
                                    lyrics=results,
                                    songTitle=song_string,
                                    artistName=artist_string,
+<<<<<<< HEAD
                                    album_img=album_img,
                                    emotions=dict(emotions))
+=======
+                                   emotions=emotions)
+>>>>>>> 5b1352d730e1e68ccc834638c3a61788ed34666e
         flash('No results found!')
         return redirect('/home')
 
