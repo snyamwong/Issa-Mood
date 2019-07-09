@@ -42,6 +42,6 @@ class Lexicon:
         """
 
         if (word.isdigit() or word in self.stop_words or (self.curse['word'] == word).any()):
-            return True
+        	return True
 
         return False

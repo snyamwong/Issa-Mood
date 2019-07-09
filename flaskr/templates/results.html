@@ -4,10 +4,15 @@
   <title>Lyric Results</title>
 </head>
 <body>
-  <h1>Lyrics of the Song</h1>
-  <h2>{{songTitle}}</h2>
-  <h3>{{artistName}}</h3>
-  <p>{{lyrics}}</p>
+  <img src = {{album_img}}>
+
+  <h1>{{songTitle}}</h1>
+  <h2>By: {{artistName}}</h2>
+
+  {% autoescape false %}
+    <p>{{lyrics.replace('\n', '<br>')}}</p>
+  {% endautoescape %}
+
   <p>{{emotions}}</p>
 </body>
 </html>

@@ -1,5 +1,7 @@
 import requests
+import types
 from bs4 import BeautifulSoup
+
 
 base_url = "https://api.genius.com"
 #this is the authorization token unique to the genius account to make API calls
@@ -18,11 +20,10 @@ def lyrics_from_song_api_path(song_api_path):
   html = BeautifulSoup(page.text, "html.parser")
   #parses the lyrics and then returns it
   [h.extract() for h in html('script')]
-  lyrics = html.find("div", class_="lyrics").get_text() 
-  #lyrics.replace('\n', ' ')
+  lyrics = html.find("div", class_="lyrics").get_text()
   return lyrics
 
-def GetLyrics(song_title,artist_name):
+def get_lyrics(song_title,artist_name):
   song_title = song_title
   artist_name = artist_name
   search_url = base_url + "/search"
@@ -41,11 +42,13 @@ def GetLyrics(song_title,artist_name):
   for hit in json["response"]["hits"]:
     if hit["result"]["primary_artist"]["name"] == artist_name:
       #stores method variable to be sent later to results page
-      GetLyrics.artist = artist_name
-      GetLyrics.song = hit["result"]["title"]
+      get_lyrics.artist = artist_name
+      get_lyrics.song = hit["result"]["title"]
+      get_lyrics.album_img =hit["result"]["header_image_thumbnail_url"]
       song_info = hit
       break
   #if theres a hit stored, get the path and call method to web scrape lyrics
   if song_info:
     song_api_path = song_info["result"]["api_path"]
     return lyrics_from_song_api_path(song_api_path)
+

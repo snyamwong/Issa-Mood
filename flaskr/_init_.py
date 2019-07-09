@@ -3,8 +3,8 @@ import sys
 import pickle
 from lyrics import Lyrics
 from flask import Flask, flash, render_template, request, redirect
-from forms import SongSearch
-from genius import GetLyrics
+from forms import Song_search
+from genius import get_lyrics
 import time
 
 def create_app(test_config=None):
@@ -32,8 +32,8 @@ def create_app(test_config=None):
 
     @app.route('/home', methods=['GET', 'POST'])
     def home():
-        #SongSearch is the form from forms.py where all the form data is stored
-        search = SongSearch(request.form)
+        #Song_search is the form from forms.py where all the form data is stored
+        search = Song_search(request.form)
         if request.method == 'POST':
             #this calls the results template and genius API from genius.py/GetLyrics
             return search_results(search)
@@ -46,20 +46,21 @@ def create_app(test_config=None):
         #this is the stored value for dropdown either: Song Name or Song Name & Artist
         search_type = search.data['select']
         #Name of the song to search for
-        song_string = search.data['songSearch']
+        song_string = search.data['song_string']
         artist_string = ""
         #If user is searching by Song & Artist, store a value in artist_string
         if search_type == "Song Name & Artist":
-            artist_string = search.data['artistSearch']
+            artist_string = search.data['artist_string']
        # print(search_type, file=sys.stderr)
 
         #GetLyrics is the genius/bs4 call to get lyrics from genius.py
-        results = GetLyrics(song_string, artist_string)
+        results = get_lyrics(song_string, artist_string)
         #if results exist, render the page and information, else flash on home page "no results"
         if results is not None:
             #this method variable is to be passed to the results page so it can display artist name
-            artist_string = GetLyrics.artist
-            song_string = GetLyrics.song
+            artist_string = get_lyrics.artist
+            song_string = get_lyrics.song
+            album_img = get_lyrics.album_img
             #time0 = time.time()
             filtered_lyrics = lyrics.filter_lyrics(results)
             emotions = lyrics.get_lyrics_emotions(filtered_lyrics)
@@ -71,6 +72,7 @@ def create_app(test_config=None):
                                    lyrics=results,
                                    songTitle=song_string,
                                    artistName=artist_string,
+                                   album_img=album_img,
                                    emotions=dict(emotions))
         flash('No results found!')
         return redirect('/home')
