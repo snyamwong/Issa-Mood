@@ -8,6 +8,8 @@
 
 * bs4
 
+* psycopg2
+
 * requests
 
 * WTForms

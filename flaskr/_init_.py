@@ -5,6 +5,7 @@ from lyrics import Lyrics
 from flask import Flask, flash, render_template, request, redirect
 from forms import Song_search
 from genius import Genius
+from db import Database
 import time
 
 def create_app(test_config=None):
@@ -44,6 +45,7 @@ def create_app(test_config=None):
     def search_results(search):
         lyrics = Lyrics()
         genius = Genius()
+        database = Database()
         #this is the stored value for dropdown either: Song Name or Song Name & Artist
         search_type = search.data['select']
         #Name of the song to search for
@@ -59,13 +61,21 @@ def create_app(test_config=None):
         #if results exist, render the page and information, else flash on home page "no results"
         if results is not None:
             #this method variable is to be passed to the results page so it can display artist name
-            artist_string = genius.artist
             song_string = genius.song
-            album_img_string = genius.album_img
-            #time0 = time.time()
-            filtered_lyrics = lyrics.filter_lyrics(results)
-            emotions = lyrics.get_lyrics_emotions(filtered_lyrics)
-            
+            artist_string = genius.artist
+            if database.data_exists(song_string,artist_string)==False:
+                album_img_string = genius.album_img
+                #time0 = time.time()
+                filtered_lyrics = lyrics.filter_lyrics(results)
+                emotions = lyrics.get_lyrics_emotions(filtered_lyrics)
+                agg_emotions = lyrics.get_agg_emotions(filtered_lyrics)
+                database.store_data(song_string,artist_string,album_img_string,results,emotions,agg_emotions)
+            else:
+                database_data = database.retrieve_data(song_string,artist_string)
+                album_img_string=database_data[2]
+                lyrics=database_data[3]
+                emotions=database_data[4]
+                agg_emotions=database_data[5]
             #time1 = time.time()
             #print(results, file=sys.stderr)
             #print(emotions, file=sys.stderr)
@@ -75,7 +85,8 @@ def create_app(test_config=None):
                                    songTitle=song_string,
                                    artistName=artist_string,
                                    album_img=album_img_string,
-                                   emotions=emotions)
+                                   emotions=emotions,
+                                   agg_emotions=agg_emotions)
         flash('No results found!')
         return redirect('/home')
 
