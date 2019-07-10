@@ -60,16 +60,18 @@ def create_app(test_config=None):
         results = genius.get_lyrics(song_string, artist_string)
         #if results exist, render the page and information, else flash on home page "no results"
         if results is not None:
-            #this method variable is to be passed to the results page so it can display artist name
             song_string = genius.song
             artist_string = genius.artist
+            #if data's song and artist don't exist in the database, do all the normal heavy loading and then store it in the database
             if database.data_exists(song_string,artist_string)==False:
                 album_img_string = genius.album_img
                 #time0 = time.time()
                 filtered_lyrics = lyrics.filter_lyrics(results)
                 emotions = lyrics.get_lyrics_emotions(filtered_lyrics)
                 agg_emotions = lyrics.get_agg_emotions(filtered_lyrics)
+                #this takes in all of the information that is passed to the tenplate normally and stores it for later use
                 database.store_data(song_string,artist_string,album_img_string,results,emotions,agg_emotions)
+            #if data exists in database, retrieve it and then store it's normal variables
             else:
                 database_data = database.retrieve_data(song_string,artist_string)
                 album_img_string=database_data[2]
