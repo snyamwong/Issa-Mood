@@ -69,7 +69,6 @@ class Lyrics:
 
         for clump in lyrics:
             emotions = self.lexicon.word_association(clump.filtered)
-            emotions = Counter(emotions.T.to_dict('records')[0])
 
             clump = Clump(original=clump.original, filtered=clump.filtered, emotion=emotions)
 
@@ -86,8 +85,6 @@ class Lyrics:
 
         for clump in lyrics:
             emotions = self.lexicon.word_association(clump.filtered)
-
-            emotions = Counter(emotions.T.to_dict('records')[0])
 
             lyrics_dict += emotions
 

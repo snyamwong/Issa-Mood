@@ -3,6 +3,7 @@ Lexicon module
 """
 
 from nltk.corpus import stopwords
+from collections import Counter
 import pandas as pd
 
 NRC_FILEPATH = 'lexicon/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt'
@@ -53,7 +54,11 @@ class Lexicon:
 
         concat_emos = pd.concat([neg_emo, true_emo])
 
-        return concat_emos.groupby('emotion').sum()
+        group_emo = concat_emos.groupby('emotion').sum()
+
+        emotions = Counter(group_emo.T.to_dict('records')[0])
+
+        return emotions
 
     def is_stop_word(self, word):
         """
