@@ -26,15 +26,34 @@ class Lexicon:
         self.stop_words.add('wa') # wasn't
         self.stop_words.add('ca') # can't
         self.stop_words.add('wo') # won't
+        self.stop_words.add('nt')
         self.stop_words.add('m')
 
     def word_association(self, words):
         """
-        Given a word, return a list of associated emotions.
+        # TODO: can most likely clean this up as a one dataframe call tbh
+        Given a word, return a df of associated emotions.
         """
-        associated_emos = self.lex.loc[(self.lex['word'].isin(words)) & (self.lex.association == 1)]
+        negated_words = []
+        true_words = []
 
-        return associated_emos.groupby('emotion').sum()
+        # this is to split up negated words into their own list, which will contain a '-'
+        for word in words:
+            if '-' in word:
+                negated_words.append(word.split('-')[1])
+            else:
+                true_words.append(word)
+
+        # taking all non associated emotions
+        neg_emo = self.lex.loc[(self.lex['word'].isin(negated_words)) & (self.lex.association == 0)]
+
+        neg_emo.loc[:, 'association'] = 1
+
+        true_emo = self.lex.loc[(self.lex['word'].isin(true_words)) & (self.lex.association == 1)]
+
+        concat_emos = pd.concat([neg_emo, true_emo])
+
+        return concat_emos.groupby('emotion').sum()
 
     def is_stop_word(self, word):
         """
@@ -42,6 +61,6 @@ class Lexicon:
         """
 
         if (word.isdigit() or word in self.stop_words or (self.curse['word'] == word).any()):
-        	return True
+            return True
 
         return False
