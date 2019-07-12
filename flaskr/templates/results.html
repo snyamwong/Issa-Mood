@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script src="jquery.min.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="bootstrap.min.js" type="text/javascript"></script>
   <title>Lyric Results</title>
 </head>
 <body>
@@ -10,9 +13,35 @@
   <h2>By: {{artistName}}</h2>
 
   {% autoescape false %}
-    <p>{{lyrics.replace('\n', '<br>')}}</p>
+    <p><!--{{lyrics.replace('\n', '<br>')}}--></p>
   {% endautoescape %}
+  {% block body %}
+  <nav>
+  <div class="nav nav-pills nav-justified" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-anticipation-tab" data-toggle="tab" href="#nav-anticipation" role="tab" aria-controls="nav-anticipation" aria-selected="true">Anticipation</a>
+    <a class="nav-item nav-link" id="nav-joy-tab" data-toggle="tab" href="#nav-joy" role="tab" aria-controls="nav-joy" aria-selected="false">Joy</a>
+    <a class="nav-item nav-link" id="nav-trust-tab" data-toggle="tab" href="#nav-trust" role="tab" aria-controls="nav-trust" aria-selected="false">Trust</a>
+    <a class="nav-item nav-link" id="nav-sadness-tab" data-toggle="tab" href="#nav-sadness" role="tab" aria-controls="nav-sadness" aria-selected="false">Sadness</a>
+    <a class="nav-item nav-link" id="nav-fear-tab" data-toggle="tab" href="#nav-fear" role="tab" aria-controls="nav-fear" aria-selected="false">Fear</a>
+    <a class="nav-item nav-link" id="nav-surprise-tab" data-toggle="tab" href="#nav-surprise" role="tab" aria-controls="nav-surprise" aria-selected="false">Surprise</a>
+
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  {% autoescape false %}
+    <div class="tab-pane fade show active text-center" id="nav-anticipation" role="tabpanel" aria-labelledby="nav-anticipation-tab"><mark style="background-color:orange;">{{lyrics.replace('\n', '<br>')}}</mark></div>
+    <div class="tab-pane fade text-center" id="nav-joy" role="tabpanel" aria-labelledby="nav-joy-tab"><center>{{lyrics.replace('\n', '<br>')}}</center></div>
+    <div class="tab-pane fade text-center" id="nav-trust" role="tabpanel" aria-labelledby="nav-trust-tab"><center>{{lyrics.replace('\n', '<br>')}}</center></div>
+    <div class="tab-pane fade text-center" id="nav-sadness" role="tabpanel" aria-labelledby="nav-sadness-tab"><center>{{lyrics.replace('\n', '<br>')}}</center></div>
+    <div class="tab-pane fade text-center" id="nav-fear" role="tabpanel" aria-labelledby="nav-fear-tab"><center>{{lyrics.replace('\n', '<br>')}}</center></div>
+    <div class="tab-pane fade text-center" id="nav-surprise" role="tabpanel" aria-labelledby="nav-surprise-tab"><center>{{lyrics.replace('\n', '<br>')}}</center></div>
+  {% endautoescape %}
+</div>
+  {% endblock %}
 
   <p>{{emotions}}{{agg_emotions}}</p>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
