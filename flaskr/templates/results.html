@@ -13,7 +13,7 @@
   <h2>By: {{artistName}}</h2>
 
   {% autoescape false %}
-    <p><!--{{lyrics.replace('\n', '<br>')}}--></p>
+    <p></p>
   {% endautoescape %}
   {% block body %}
   <nav>
@@ -24,17 +24,21 @@
     <a class="nav-item nav-link" id="nav-sadness-tab" data-toggle="tab" href="#nav-sadness" role="tab" aria-controls="nav-sadness" aria-selected="false">Sadness</a>
     <a class="nav-item nav-link" id="nav-fear-tab" data-toggle="tab" href="#nav-fear" role="tab" aria-controls="nav-fear" aria-selected="false">Fear</a>
     <a class="nav-item nav-link" id="nav-surprise-tab" data-toggle="tab" href="#nav-surprise" role="tab" aria-controls="nav-surprise" aria-selected="false">Surprise</a>
+    <a class="nav-item nav-link" id="nav-anger-tab" data-toggle="tab" href="#nav-anger" role="tab" aria-controls="nav-anger" aria-selected="false">Anger</a>
+    <a class="nav-item nav-link" id="nav-disgust-tab" data-toggle="tab" href="#nav-disgust" role="tab" aria-controls="nav-disgust" aria-selected="false">Disgust</a>
 
   </div>
 </nav>
 <div class="tab-content" id="nav-tabContent">
   {% autoescape false %}
-    <div class="tab-pane fade show active text-center" id="nav-anticipation" role="tabpanel" aria-labelledby="nav-anticipation-tab"><mark style="background-color:orange;">{{lyrics.replace('\n', '<br>')}}</mark></div>
-    <div class="tab-pane fade text-center" id="nav-joy" role="tabpanel" aria-labelledby="nav-joy-tab"><center>{{lyrics.replace('\n', '<br>')}}</center></div>
-    <div class="tab-pane fade text-center" id="nav-trust" role="tabpanel" aria-labelledby="nav-trust-tab"><center>{{lyrics.replace('\n', '<br>')}}</center></div>
-    <div class="tab-pane fade text-center" id="nav-sadness" role="tabpanel" aria-labelledby="nav-sadness-tab"><center>{{lyrics.replace('\n', '<br>')}}</center></div>
-    <div class="tab-pane fade text-center" id="nav-fear" role="tabpanel" aria-labelledby="nav-fear-tab"><center>{{lyrics.replace('\n', '<br>')}}</center></div>
-    <div class="tab-pane fade text-center" id="nav-surprise" role="tabpanel" aria-labelledby="nav-surprise-tab"><center>{{lyrics.replace('\n', '<br>')}}</center></div>
+    <div class="tab-pane fade show active text-center" id="nav-anticipation" role="tabpanel" aria-labelledby="nav-anticipation-tab">{{lyrics[0].replace('\n', '<br>')}}</div>
+    <div class="tab-pane fade text-center" id="nav-joy" role="tabpanel" aria-labelledby="nav-joy-tab"><center>{{lyrics[1].replace('\n', '<br>')}}</center></div>
+    <div class="tab-pane fade text-center" id="nav-trust" role="tabpanel" aria-labelledby="nav-trust-tab"><center>{{lyrics[2].replace('\n', '<br>')}}</center></div>
+    <div class="tab-pane fade text-center" id="nav-sadness" role="tabpanel" aria-labelledby="nav-sadness-tab"><center>{{lyrics[3].replace('\n', '<br>')}}</center></div>
+    <div class="tab-pane fade text-center" id="nav-fear" role="tabpanel" aria-labelledby="nav-fear-tab"><center>{{lyrics[4].replace('\n', '<br>')}}</center></div>
+    <div class="tab-pane fade text-center" id="nav-surprise" role="tabpanel" aria-labelledby="nav-surprise-tab"><center>{{lyrics[5].replace('\n', '<br>')}}</center></div>
+    <div class="tab-pane fade text-center" id="nav-anger" role="tabpanel" aria-labelledby="nav-anger-tab"><center>{{lyrics[6].replace('\n', '<br>')}}</center></div>
+    <div class="tab-pane fade text-center" id="nav-disgust" role="tabpanel" aria-labelledby="nav-disgust-tab"><center>{{lyrics[7].replace('\n', '<br>')}}</center></div>
   {% endautoescape %}
 </div>
   {% endblock %}
