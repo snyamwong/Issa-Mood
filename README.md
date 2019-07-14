@@ -2,21 +2,7 @@
 
 ## pip list
 
-* nltk
-
-* pandas
-
-* bs4
-
-* psycopg2
-
-* requests
-
-* WTForms
-
-* flask
-
-* textblob
+pip install -r requirements
 
 ## Lexicon
 
@@ -24,22 +10,30 @@ The Lexicon used for this project is located here
 
 https://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm
 
-## Running Instructions
+## Foundation
 
-clone project with "git clone $URL"
+https://zurb.com/playground/foundation-icon-fonts-3#customize
+
+https://foundation.zurb.com/
+
+Download the files, and move them into static/css directory.
+
+## Running Instructions
 
 Install Python 3.7.3
 
 verify installation with "python --version"
 
+Make sure you run the above pip command (also make you sure update the requirements.txt whenever you install a new package!)
+
+Make sure you have the lexicon installed.
+
+Make sure you have foundation installed.
+
+clone project with "git clone $URL"
+
 Move into git directory
 
-install all the pip packages in pip list above (e.x pip install flask)
-
-". /venv/Scripts/activate"
-
-"export FLASK_APP=flaskr/\_init\_.py"
-
-"flask run"
+Run the command ". run.sh"
 
 Go to http://127.0.0.1:5000/home to verify that the web app is working correctly
