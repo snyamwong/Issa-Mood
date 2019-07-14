@@ -1,5 +1,6 @@
 import psycopg2
 import sys
+import pickle
 # Connect to an existing database
 
 class Database:
@@ -18,7 +19,7 @@ class Database:
 		cur = conn.cursor()
 
 		# Execute a command: this creates a new table
-		cur.execute("CREATE TABLE IF NOT EXISTS song_info (song_name varchar,artist_name varchar,album_img varchar,lyrics varchar,emotions text,agg_emotions text);")
+		cur.execute("CREATE TABLE IF NOT EXISTS song_info (song_name varchar,artist_name varchar,album_img varchar,lyrics varchar,emotions BYTEA,agg_emotions BYTEA);")
 		conn.commit()
 
 		# Query the database and obtain data as Python objects
@@ -51,10 +52,13 @@ class Database:
 		 	password="issamood",
 		)
 		cur = conn.cursor()
+		emotions = pickle.dumps(emotions)
+		agg_emotions = pickle.dumps(agg_emotions)
+		
 		#if song isn't stored, insert data into database
 		if self.song_stored == False:
 			cur.execute("INSERT INTO song_info (song_name,artist_name,album_img,lyrics,emotions,agg_emotions) VALUES (%s,%s,%s,%s,%s,%s)",
-			(song_name,artist_name,album_img,lyrics,str(emotions),str(agg_emotions)))
+			(song_name,artist_name,album_img,lyrics,psycopg2.Binary(emotions),psycopg2.Binary(agg_emotions)))
 
 		# Make the changes to the database persistent
 		conn.commit()

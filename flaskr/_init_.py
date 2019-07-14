@@ -6,6 +6,8 @@ from flask import Flask, flash, render_template, request, redirect
 from forms import Song_search
 from genius import Genius
 from db import Database
+from results import highlight_emotion_sentences
+import pickle
 import time
 
 def create_app(test_config=None):
@@ -75,9 +77,11 @@ def create_app(test_config=None):
             else:
                 database_data = database.retrieve_data(song_string,artist_string)
                 album_img_string=database_data[2]
-                lyrics=database_data[3]
-                emotions=database_data[4]
-                agg_emotions=database_data[5]
+                results=database_data[3]
+                emotions=pickle.loads(database_data[4])
+                agg_emotions=pickle.loads(database_data[5])
+
+            results = highlight_emotion_sentences(emotions,results)
             #time1 = time.time()
             #print(results, file=sys.stderr)
             #print(emotions, file=sys.stderr)
