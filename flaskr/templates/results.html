@@ -1,51 +1,95 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <script src="jquery.min.js" type="text/javascript"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <script src="bootstrap.min.js" type="text/javascript"></script>
-  <title>Lyric Results</title>
-</head>
-<body>
-  <img src = {{album_img}}>
 
-  <h1>{{songTitle}}</h1>
-  <h2>By: {{artistName}}</h2>
+<head>
+  <title>Lyric Results</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="icon" href="../static/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+  <script type="text/javascript" src="//d3js.org/d3.v3.js"></script>
+  <script src="../static/js/RadarChart.js"></script>
+</head>
+
+<body>
+  <img src={{album_img}} class="rounded mx-auto d-block">
+
+  <h1 class="text-center">{{songTitle}}</h1>
+  <h2 class="text-center">By: {{artistName}}</h2>
 
   {% autoescape false %}
-    <p></p>
+  <p></p>
   {% endautoescape %}
   {% block body %}
   <nav>
-  <div class="nav nav-pills nav-justified" id="nav-tab" role="tablist">
-    <a class="nav-item nav-link active" id="nav-anticipation-tab" data-toggle="tab" href="#nav-anticipation" role="tab" aria-controls="nav-anticipation" aria-selected="true">Anticipation</a>
-    <a class="nav-item nav-link" id="nav-joy-tab" data-toggle="tab" href="#nav-joy" role="tab" aria-controls="nav-joy" aria-selected="false">Joy</a>
-    <a class="nav-item nav-link" id="nav-trust-tab" data-toggle="tab" href="#nav-trust" role="tab" aria-controls="nav-trust" aria-selected="false">Trust</a>
-    <a class="nav-item nav-link" id="nav-sadness-tab" data-toggle="tab" href="#nav-sadness" role="tab" aria-controls="nav-sadness" aria-selected="false">Sadness</a>
-    <a class="nav-item nav-link" id="nav-fear-tab" data-toggle="tab" href="#nav-fear" role="tab" aria-controls="nav-fear" aria-selected="false">Fear</a>
-    <a class="nav-item nav-link" id="nav-surprise-tab" data-toggle="tab" href="#nav-surprise" role="tab" aria-controls="nav-surprise" aria-selected="false">Surprise</a>
-    <a class="nav-item nav-link" id="nav-anger-tab" data-toggle="tab" href="#nav-anger" role="tab" aria-controls="nav-anger" aria-selected="false">Anger</a>
-    <a class="nav-item nav-link" id="nav-disgust-tab" data-toggle="tab" href="#nav-disgust" role="tab" aria-controls="nav-disgust" aria-selected="false">Disgust</a>
+    <div class="nav nav-pills nav-justified" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link active" id="nav-anticipation-tab" data-toggle="tab" href="#nav-anticipation" role="tab" aria-controls="nav-anticipation" aria-selected="true">Anticipation</a>
+      <a class="nav-item nav-link" id="nav-joy-tab" data-toggle="tab" href="#nav-joy" role="tab" aria-controls="nav-joy" aria-selected="false">Joy</a>
+      <a class="nav-item nav-link" id="nav-trust-tab" data-toggle="tab" href="#nav-trust" role="tab" aria-controls="nav-trust" aria-selected="false">Trust</a>
+      <a class="nav-item nav-link" id="nav-sadness-tab" data-toggle="tab" href="#nav-sadness" role="tab" aria-controls="nav-sadness" aria-selected="false">Sadness</a>
+      <a class="nav-item nav-link" id="nav-fear-tab" data-toggle="tab" href="#nav-fear" role="tab" aria-controls="nav-fear" aria-selected="false">Fear</a>
+      <a class="nav-item nav-link" id="nav-surprise-tab" data-toggle="tab" href="#nav-surprise" role="tab" aria-controls="nav-surprise" aria-selected="false">Surprise</a>
+      <a class="nav-item nav-link" id="nav-anger-tab" data-toggle="tab" href="#nav-anger" role="tab" aria-controls="nav-anger" aria-selected="false">Anger</a>
+      <a class="nav-item nav-link" id="nav-disgust-tab" data-toggle="tab" href="#nav-disgust" role="tab" aria-controls="nav-disgust" aria-selected="false">Disgust</a>
 
+    </div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+    {% autoescape false %}
+    <div class="tab-pane fade show active text-center" id="nav-anticipation" role="tabpanel" aria-labelledby="nav-anticipation-tab">
+      <p>{{lyrics[0].replace('\n', '<br>')}}</p>
+    </div>
+    <div class="tab-pane fade text-center" id="nav-joy" role="tabpanel" aria-labelledby="nav-joy-tab">
+      <p>{{lyrics[1].replace('\n', '<br>')}}</p>
+    </div>
+    <div class="tab-pane fade text-center" id="nav-trust" role="tabpanel" aria-labelledby="nav-trust-tab">
+      <p>{{lyrics[2].replace('\n', '<br>')}}</p>
+    </div>
+    <div class="tab-pane fade text-center" id="nav-sadness" role="tabpanel" aria-labelledby="nav-sadness-tab">
+      <p>{{lyrics[3].replace('\n', '<br>')}}</p>
+    </div>
+    <div class="tab-pane fade text-center" id="nav-fear" role="tabpanel" aria-labelledby="nav-fear-tab">
+      <p>{{lyrics[4].replace('\n', '<br>')}}</p>
+    </div>
+    <div class="tab-pane fade text-center" id="nav-surprise" role="tabpanel" aria-labelledby="nav-surprise-tab">
+      <p>{{lyrics[5].replace('\n', '<br>')}}</p>
+    </div>
+    <div class="tab-pane fade text-center" id="nav-anger" role="tabpanel" aria-labelledby="nav-anger-tab">
+      <p>{{lyrics[6].replace('\n', '<br>')}}</p>
+    </div>
+    <div class="tab-pane fade text-center" id="nav-disgust" role="tabpanel" aria-labelledby="nav-disgust-tab">
+      <p>{{lyrics[7].replace('\n', '<br>')}}</p>
+    </div>
+    {% endautoescape %}
   </div>
-</nav>
-<div class="tab-content" id="nav-tabContent">
-  {% autoescape false %}
-    <div class="tab-pane fade show active text-center" id="nav-anticipation" role="tabpanel" aria-labelledby="nav-anticipation-tab">{{lyrics[0].replace('\n', '<br>')}}</div>
-    <div class="tab-pane fade text-center" id="nav-joy" role="tabpanel" aria-labelledby="nav-joy-tab"><center>{{lyrics[1].replace('\n', '<br>')}}</center></div>
-    <div class="tab-pane fade text-center" id="nav-trust" role="tabpanel" aria-labelledby="nav-trust-tab"><center>{{lyrics[2].replace('\n', '<br>')}}</center></div>
-    <div class="tab-pane fade text-center" id="nav-sadness" role="tabpanel" aria-labelledby="nav-sadness-tab"><center>{{lyrics[3].replace('\n', '<br>')}}</center></div>
-    <div class="tab-pane fade text-center" id="nav-fear" role="tabpanel" aria-labelledby="nav-fear-tab"><center>{{lyrics[4].replace('\n', '<br>')}}</center></div>
-    <div class="tab-pane fade text-center" id="nav-surprise" role="tabpanel" aria-labelledby="nav-surprise-tab"><center>{{lyrics[5].replace('\n', '<br>')}}</center></div>
-    <div class="tab-pane fade text-center" id="nav-anger" role="tabpanel" aria-labelledby="nav-anger-tab"><center>{{lyrics[6].replace('\n', '<br>')}}</center></div>
-    <div class="tab-pane fade text-center" id="nav-disgust" role="tabpanel" aria-labelledby="nav-disgust-tab"><center>{{lyrics[7].replace('\n', '<br>')}}</center></div>
-  {% endautoescape %}
-</div>
   {% endblock %}
 
-  <p><!--{{emotions}}{{agg_emotions}}--></p>
+  <div class="chart-container"></div>
+
+  <script>
+    var agg_emotions = JSON.parse("{{agg_emotions}}".replace(/&#34;/g, "\""))
+
+    axes = []
+
+    for (key in agg_emotions) {
+      if (agg_emotions.hasOwnProperty(key)) {
+        axes.push({
+          "axis": key,
+          value: agg_emotions[key]
+        })
+      }
+    }
+
+    var data = [{
+      className: "emotions",
+      axes: axes
+    }]
+
+    RadarChart.draw(".chart-container", data)
+  </script>
+
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
+
 </html>
