@@ -120,15 +120,23 @@
       color: color
     };
 
-    var agg_emotions = JSON.parse("{{agg_emotions}}".replace(/&#34;/g, "\""))
+    var agg_emotions = JSON.parse("{{agg_emotions}}".replace(/&#34;/g, "\"").replace(/&#39;/g, "\""))
 
     axes = []
+
+    sum = 0.0
+
+    for (key in agg_emotions) {
+      if (agg_emotions.hasOwnProperty(key)) {
+        sum += agg_emotions[key]
+      }
+    }
 
     for (key in agg_emotions) {
       if (agg_emotions.hasOwnProperty(key)) {
         axes.push({
           "axis": key,
-          value: agg_emotions[key]
+          value: agg_emotions[key] / sum
         })
       }
     }
