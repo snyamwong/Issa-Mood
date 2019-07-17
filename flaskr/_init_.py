@@ -11,6 +11,7 @@ from genius import Genius
 from lyrics import Lyrics
 from results import generate_results_data
 
+
 def create_app(test_config=None):
     """
     """
@@ -61,15 +62,16 @@ def create_app(test_config=None):
         results = genius.get_lyrics(song_string, artist_string)
         # if results exist, render the page and information, else flash on home page "no results"
         if results is not None:
-            data = generate_results_data(song_string,artist_string,genius,results)
-            
+            data = generate_results_data(
+                song_string, artist_string, genius, results)
+
             return render_template('results.html',
                                    lyrics=data[0],
                                    songTitle=data[1],
                                    artistName=data[2],
                                    album_img=data[3],
                                    emotions=data[4],
-                                   agg_emotions=data[5])
+                                   agg_emotions=json.dumps(counter_to_dict(data[5])))
         flash('No results found!')
         return redirect('/home')
 
