@@ -3,11 +3,15 @@
 
 <head>
   <title>Lyric Results</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="icon" href="../static/favicon.ico" type="image/x-icon">
+  <!-- Google fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
-  <script type="text/javascript" src="//d3js.org/d3.v3.js"></script>
-  <script src="../static/js/RadarChart.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -30,7 +34,6 @@
       <a class="nav-item nav-link" id="nav-surprise-tab" data-toggle="tab" href="#nav-surprise" role="tab" aria-controls="nav-surprise" aria-selected="false">Surprise</a>
       <a class="nav-item nav-link" id="nav-anger-tab" data-toggle="tab" href="#nav-anger" role="tab" aria-controls="nav-anger" aria-selected="false">Anger</a>
       <a class="nav-item nav-link" id="nav-disgust-tab" data-toggle="tab" href="#nav-disgust" role="tab" aria-controls="nav-disgust" aria-selected="false">Disgust</a>
-
     </div>
   </nav>
   <div class="tab-content" id="nav-tabContent">
@@ -63,9 +66,34 @@
   </div>
   {% endblock %}
 
-  <div class="chart-container"></div>
+  <div class="chart-container text-center"></div>
 
+  <!-- D3.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+  <script src="../static/js/RadarChart.js"></script>
   <script>
+    var margin = {
+        top: 100,
+        right: 100,
+        bottom: 100,
+        left: 100
+      },
+      width = Math.min(700, window.innerWidth - 10) - margin.left - margin.right,
+      height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
+
+    var color = d3.scale.ordinal()
+      .range(["#EDC951", "#CC333F", "#00A0B0"]);
+
+    var radarChartOptions = {
+      w: width,
+      h: height,
+      margin: margin,
+      maxValue: 0.5,
+      levels: 5,
+      roundStrokes: true,
+      color: color
+    };
+
     var agg_emotions = JSON.parse("{{agg_emotions}}".replace(/&#34;/g, "\""))
 
     axes = []
@@ -79,17 +107,10 @@
       }
     }
 
-    var data = [{
-      className: "emotions",
-      axes: axes
-    }]
+    var data = [axes]
 
-    RadarChart.draw(".chart-container", data)
+    RadarChart(".chart-container", data, radarChartOptions)
   </script>
-
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 
 </html>
