@@ -1,0 +1,16 @@
+nav * {
+  padding: .25em;
+}
+
+#info-section {
+  background-color: black;
+}
+
+#info-section * {
+  padding: .25em;
+  color: white;
+}
+
+#lyrics-section {
+  clear: both
+}

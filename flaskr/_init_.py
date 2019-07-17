@@ -1,12 +1,15 @@
 import os
 import sys
 import pickle
+import json
+import time
+from counter_util import counter_to_dict
 from flask import Flask, flash, render_template, request, redirect
+from db import Database
 from forms import Song_search
 from genius import Genius
+from lyrics import Lyrics
 from results import generate_results_data
-import pickle
-import time
 
 def create_app(test_config=None):
     """
@@ -33,10 +36,10 @@ def create_app(test_config=None):
 
     @app.route('/home', methods=['GET', 'POST'])
     def home():
-        #Song_search is the form from forms.py where all the form data is stored
+        # Song_search is the form from forms.py where all the form data is stored
         search = Song_search(request.form)
         if request.method == 'POST':
-            #this calls the results template and genius API from genius.py/GetLyrics
+            # this calls the results template and genius API from genius.py/GetLyrics
             return search_results(search)
 
         return render_template('home.html', form=search)
@@ -44,20 +47,20 @@ def create_app(test_config=None):
     @app.route('/results')
     def search_results(search):
         genius = Genius()
-        #this is the stored value for dropdown either: Song Name or Song Name & Artist
+        database = Database()
+        # this is the stored value for dropdown either: Song Name or Song Name & Artist
         search_type = search.data['select']
-        #Name of the song to search for
+        # Name of the song to search for
         song_string = search.data['song_string']
         artist_string = ""
-        #If user is searching by Song & Artist, store a value in artist_string
+        # If user is searching by Song & Artist, store a value in artist_string
         if search_type == "Song Name & Artist":
             artist_string = search.data['artist_string']
 
-        #GetLyrics is the genius/bs4 call to get lyrics from genius.py
+        # GetLyrics is the genius/bs4 call to get lyrics from genius.py
         results = genius.get_lyrics(song_string, artist_string)
-        #if results exist, render the page and information, else flash on home page "no results"
+        # if results exist, render the page and information, else flash on home page "no results"
         if results is not None:
-
             data = generate_results_data(song_string,artist_string,genius,results)
             
             return render_template('results.html',

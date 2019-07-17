@@ -1,85 +1,89 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Issa-Mood</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="../static/css/foundation.min.css">
-    <link rel="stylesheet" href="../static/css/foundation-icons.css">
-    <link rel="stylesheet" href="../static/css/home.css">
-    <link rel="icon" href="../static/favicon.ico" type="image/x-icon">
-  </head>
 
-  <body>
-    <nav>
-      <div class="top-bar">
-        <div class="top-bar-left">
-          <ul class="menu">
-            <li class="menu-text">Issa-Mood</li>
-          </ul>
-        </div>
-        <div class="top-bar-right">
-          <ul class="menu icons icons-top">
-            <li><a href="#"><i class="fi-home"></i><span>Home</span></a>
-            <li><a href="#"><i class="fi-laptop"></i><span>Research</span></a></li>
-            <li><a href="https://github.com/tinyamwong/Issa-Mood"><i class="fi-social-github"></i><span>Github</span></a></li>
-          </ul>
-        </div>
+<head>
+  <title>Issa-Mood</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="../static/css/foundation.min.css">
+  <link rel="stylesheet" href="../static/css/foundation-icons.css">
+  <link rel="stylesheet" href="../static/css/home.css">
+  <link rel="icon" href="../static/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+  <nav>
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <ul class="menu">
+          <li class="menu-text">Issa-Mood</li>
+        </ul>
       </div>
-    </nav>
-
-    <section id="about">
-      <div class="grid-x">
-        <div class="cell large-12 text-center">
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-          </p>
-        </div>
+      <div class="top-bar-right">
+        <ul class="menu icons icons-top">
+          <li><a href="/home"><i class="fi-home"></i><span>Home</span></a>
+          <li><a href="#"><i class="fi-laptop"></i><span>Research</span></a></li>
+          <li><a href="https://github.com/tinyamwong/Issa-Mood"><i class="fi-social-github"></i><span>Github</span></a></li>
+        </ul>
       </div>
-    </section>
+    </div>
+  </nav>
 
-    <section id="form">
-      <div class="grid-container">
-        <div class="card">
-          <div class="card-section text-center">
-            <h1>
-              🎶 Search a song 🎶
-            </h1>
-            <h6 class="subheader">
-              Enter your favorite song, or a song from your favorite artist.
-            </h6>
-          </div>
-          <div class="card-section">
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            <ul class=flashes>
-              {% for message in messages %}
-              <li>{{ message }}</li>
-              {% endfor %}
-            </ul>
-            {% endif %}
-            {% endwith %}
-            {% from "_formhelpers.html" import render_field %}
-            <form method=post>
-              <div class="grid-x grid-margin-x grid-padding-x align-center text-center">
-                <div class="cell shrink">
-                  {{ render_field(form.select) }}
-                </div>
-                <div class="cell shrink">
-                  {{ render_field(form.song_string) }}
-                </div>
-                <div class="cell shrink">
-                  {{ render_field(form.artist_string) }}
-                </div>
-                <input class="button" type=submit value=Search>
+  <section id="about">
+    <div class="grid-x">
+      <div class="cell large-12 text-center">
+        <p>
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen
+          book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more
+          recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="form">
+    <div class="grid-container">
+      <div class="card">
+        <div class="card-section text-center">
+          <h1>
+            🎶 Search a song 🎶
+          </h1>
+          <h6 class="subheader">
+            Enter your favorite song, or a song from your favorite artist.
+          </h6>
+        </div>
+        <div class="card-section">
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+          <ul class=flashes>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+          {% endwith %}
+          {% from "_formhelpers.html" import render_field %}
+          <form method=post>
+            <div class="grid-x grid-margin-x grid-padding-x align-center text-center">
+              <div class="cell shrink">
+                {{ render_field(form.select) }}
               </div>
-            </form>
-          </div>
+              <div class="cell shrink">
+                {{ render_field(form.song_string) }}
+              </div>
+              <div class="cell shrink">
+                {{ render_field(form.artist_string) }}
+              </div>
+              <input class="button" type=submit value=Search>
+            </div>
+          </form>
         </div>
       </div>
-    </section>
-  </body>
+    </div>
+  </section>
+</body>
 
-  <footer></footer>
+<footer></footer>
 
-  <script type="text/javascript" src="../static/js/home_search.js"></script>
+<script type="text/javascript" src="../static/js/HomeSearch.js"></script>
+
 </html>
