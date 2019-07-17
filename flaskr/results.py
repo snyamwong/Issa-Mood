@@ -1,4 +1,36 @@
 import sys
+from lyrics import Lyrics
+from genius import Genius
+from db import Database
+import pickle
+
+def generate_results_data(song_string,artist_string,genius,results):
+	lyrics = Lyrics()
+	database = Database()
+	
+	song_string = genius.song
+	artist_string = genius.artist
+    #if data's song and artist don't exist in the database, do all the normal heavy loading and then store it in the database
+	if database.data_exists(song_string,artist_string)==False:
+	    album_img_string = genius.album_img
+	    #time0 = time.time()
+	    filtered_lyrics = lyrics.filter_lyrics(results)
+	    emotions = lyrics.get_lyrics_emotions(filtered_lyrics)
+	    agg_emotions = lyrics.get_agg_emotions(filtered_lyrics)
+	    #this takes in all of the information that is passed to the tenplate normally and stores it for later use
+	    database.store_data(song_string,artist_string,album_img_string,results,emotions,agg_emotions)
+	#if data exists in database, retrieve it and then store it's normal variables
+	else:
+	    database_data = database.retrieve_data(song_string,artist_string)
+	    album_img_string=database_data[2]
+	    results=database_data[3]
+	    emotions=pickle.loads(database_data[4])
+	    agg_emotions=pickle.loads(database_data[5])
+
+	results = highlight_emotion_sentences(emotions,results)
+
+	results_data = [results,song_string,artist_string,album_img_string,emotions,agg_emotions]
+	return results_data
 
 
 def highlight_emotion_sentences(emotions_list, lyrics):
