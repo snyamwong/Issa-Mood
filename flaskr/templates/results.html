@@ -91,13 +91,39 @@
     {% endblock %}
   </div>
 
+  <div id="emotion-chart" class="text-center"></div>
 
-  <div class="chart-container text-center"></div>
+  <div id="sentiment-chart" class="text-center">
+
+  </div>
 
   <!-- D3.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
   <script src="../static/js/RadarChart.js"></script>
   <script>
+    var agg_emotions = JSON.parse("{{agg_emotions}}".replace(/&#34;/g, "\"").replace(/&#39;/g, "\""))
+
+    axes = []
+
+    sum = 0.0
+
+    for (key in agg_emotions) {
+      if (agg_emotions.hasOwnProperty(key) && key !== 'positive' && key !== 'negative') {
+        sum += agg_emotions[key]
+      }
+    }
+
+    for (key in agg_emotions) {
+      if (agg_emotions.hasOwnProperty(key) && key !== 'positive' && key !== 'negative') {
+        axes.push({
+          "axis": key,
+          value: agg_emotions[key] / sum
+        })
+      }
+    }
+
+    var data = [axes]
+
     var margin = {
         top: 100,
         right: 100,
@@ -110,40 +136,21 @@
     var color = d3.scale.ordinal()
       .range(["#EDC951", "#CC333F", "#00A0B0"]);
 
+    console.log(sum)
+    console.log(axes.length)
+    console.log(sum / axes.length)
+
     var radarChartOptions = {
       w: width,
       h: height,
       margin: margin,
-      maxValue: 0.5,
+      maxValue: (sum / axes.length) * .001,
       levels: 5,
       roundStrokes: true,
       color: color
     };
 
-    var agg_emotions = JSON.parse("{{agg_emotions}}".replace(/&#34;/g, "\"").replace(/&#39;/g, "\""))
-
-    axes = []
-
-    sum = 0.0
-
-    for (key in agg_emotions) {
-      if (agg_emotions.hasOwnProperty(key)) {
-        sum += agg_emotions[key]
-      }
-    }
-
-    for (key in agg_emotions) {
-      if (agg_emotions.hasOwnProperty(key)) {
-        axes.push({
-          "axis": key,
-          value: agg_emotions[key] / sum
-        })
-      }
-    }
-
-    var data = [axes]
-
-    RadarChart(".chart-container", data, radarChartOptions)
+    RadarChart("#emotion-chart", data, radarChartOptions)
   </script>
 </body>
 
