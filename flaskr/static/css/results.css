@@ -7,10 +7,24 @@ nav * {
 }
 
 #info-section * {
-  padding: .25em;
+  margin: 1em;
+  padding: 1em;
   color: white;
+}
+
+#album-img {
+  max-width: 25%;
+  width: 15%;
+  left: 0px;
+  right: 0px;
 }
 
 #lyrics-section {
   clear: both
+}
+
+.tab-pane {
+  width: 100%;
+  height: 16em;
+  overflow-y: scroll;
 }

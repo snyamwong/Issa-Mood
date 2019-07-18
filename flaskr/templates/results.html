@@ -5,16 +5,16 @@
   <title>Lyric Results</title>
   <link rel="icon" href="../static/favicon.ico" type="image/x-icon">
   <!-- Google fonts -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="../static/css/foundation.min.css">
   <link rel="stylesheet" href="../static/css/foundation-icons.css">
   <link rel="stylesheet" href="../static/css/results.css">
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -35,67 +35,70 @@
     </div>
   </nav>
 
-  <div id="info-section" class="container-fluid text-center">
-    <img src={{album_img}} class="">
-    <h2 class="text-center">{{songTitle}}</h2>
-    <h3 class="text-center">By: {{artistName}}</h3>
+  <div id="info-section" class="media">
+    <img id="album-img" src={{album_img}} class="align-self-center mr-3">
+    <div class="media-body">
+      <h4>{{songTitle}}</h4>
+      <h5>By: {{artistName}}</h5>
+    </div>
   </div>
 
   <br>
 
   <div id="lyrics-section" class="container-fluid">
-    {% autoescape false %}
-    <p></p>
-    {% endautoescape %}
     {% block body %}
-    <nav>
-      <div class="nav nav-pills nav-justified" id="nav-tab" role="tablist">
-        <a class="nav-item nav-link active" id="nav-anticipation-tab" data-toggle="tab" href="#nav-anticipation" role="tab" aria-controls="nav-anticipation" aria-selected="true">Anticipation</a>
-        <a class="nav-item nav-link" id="nav-joy-tab" data-toggle="tab" href="#nav-joy" role="tab" aria-controls="nav-joy" aria-selected="false">Joy</a>
-        <a class="nav-item nav-link" id="nav-trust-tab" data-toggle="tab" href="#nav-trust" role="tab" aria-controls="nav-trust" aria-selected="false">Trust</a>
-        <a class="nav-item nav-link" id="nav-sadness-tab" data-toggle="tab" href="#nav-sadness" role="tab" aria-controls="nav-sadness" aria-selected="false">Sadness</a>
-        <a class="nav-item nav-link" id="nav-fear-tab" data-toggle="tab" href="#nav-fear" role="tab" aria-controls="nav-fear" aria-selected="false">Fear</a>
-        <a class="nav-item nav-link" id="nav-surprise-tab" data-toggle="tab" href="#nav-surprise" role="tab" aria-controls="nav-surprise" aria-selected="false">Surprise</a>
-        <a class="nav-item nav-link" id="nav-anger-tab" data-toggle="tab" href="#nav-anger" role="tab" aria-controls="nav-anger" aria-selected="false">Anger</a>
-        <a class="nav-item nav-link" id="nav-disgust-tab" data-toggle="tab" href="#nav-disgust" role="tab" aria-controls="nav-disgust" aria-selected="false">Disgust</a>
+    <div class="card scrollbar-ripe-malinka">
+      <div class="card-header">
+        <nav>
+          <div class="nav nav-pills nav-justified" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-anticipation-tab" data-toggle="tab" href="#nav-anticipation" role="tab" aria-controls="nav-anticipation" aria-selected="true">Anticipation</a>
+            <a class="nav-item nav-link" id="nav-joy-tab" data-toggle="tab" href="#nav-joy" role="tab" aria-controls="nav-joy" aria-selected="false">Joy</a>
+            <a class="nav-item nav-link" id="nav-trust-tab" data-toggle="tab" href="#nav-trust" role="tab" aria-controls="nav-trust" aria-selected="false">Trust</a>
+            <a class="nav-item nav-link" id="nav-sadness-tab" data-toggle="tab" href="#nav-sadness" role="tab" aria-controls="nav-sadness" aria-selected="false">Sadness</a>
+            <a class="nav-item nav-link" id="nav-fear-tab" data-toggle="tab" href="#nav-fear" role="tab" aria-controls="nav-fear" aria-selected="false">Fear</a>
+            <a class="nav-item nav-link" id="nav-surprise-tab" data-toggle="tab" href="#nav-surprise" role="tab" aria-controls="nav-surprise" aria-selected="false">Surprise</a>
+            <a class="nav-item nav-link" id="nav-anger-tab" data-toggle="tab" href="#nav-anger" role="tab" aria-controls="nav-anger" aria-selected="false">Anger</a>
+            <a class="nav-item nav-link" id="nav-disgust-tab" data-toggle="tab" href="#nav-disgust" role="tab" aria-controls="nav-disgust" aria-selected="false">Disgust</a>
+          </div>
+        </nav>
       </div>
-    </nav>
-    <div class="tab-content" id="nav-tabContent">
-      {% autoescape false %}
-      <div class="tab-pane fade show active text-center" id="nav-anticipation" role="tabpanel" aria-labelledby="nav-anticipation-tab">
-        <p>{{lyrics[0].replace('\n', '<br>')}}</p>
+      <div class="card-body">
+        <div class="tab-content" id="nav-tabContent">
+          {% autoescape false %}
+          <div class="tab-pane fade show active text-center force-overflow" id="nav-anticipation" role="tabpanel" aria-labelledby="nav-anticipation-tab">
+            <p>{{lyrics[0].replace('\n', '<br>')}}</p>
+          </div>
+          <div class="tab-pane fade text-center" id="nav-joy" role="tabpanel" aria-labelledby="nav-joy-tab">
+            <p>{{lyrics[1].replace('\n', '<br>')}}</p>
+          </div>
+          <div class="tab-pane fade text-center" id="nav-trust" role="tabpanel" aria-labelledby="nav-trust-tab">
+            <p>{{lyrics[2].replace('\n', '<br>')}}</p>
+          </div>
+          <div class="tab-pane fade text-center" id="nav-sadness" role="tabpanel" aria-labelledby="nav-sadness-tab">
+            <p>{{lyrics[3].replace('\n', '<br>')}}</p>
+          </div>
+          <div class="tab-pane fade text-center" id="nav-fear" role="tabpanel" aria-labelledby="nav-fear-tab">
+            <p>{{lyrics[4].replace('\n', '<br>')}}</p>
+          </div>
+          <div class="tab-pane fade text-center" id="nav-surprise" role="tabpanel" aria-labelledby="nav-surprise-tab">
+            <p>{{lyrics[5].replace('\n', '<br>')}}</p>
+          </div>
+          <div class="tab-pane fade text-center" id="nav-anger" role="tabpanel" aria-labelledby="nav-anger-tab">
+            <p>{{lyrics[6].replace('\n', '<br>')}}</p>
+          </div>
+          <div class="tab-pane fade text-center" id="nav-disgust" role="tabpanel" aria-labelledby="nav-disgust-tab">
+            <p>{{lyrics[7].replace('\n', '<br>')}}</p>
+          </div>
+          {% endautoescape %}
+        </div>
+        {% endblock %}
       </div>
-      <div class="tab-pane fade text-center" id="nav-joy" role="tabpanel" aria-labelledby="nav-joy-tab">
-        <p>{{lyrics[1].replace('\n', '<br>')}}</p>
-      </div>
-      <div class="tab-pane fade text-center" id="nav-trust" role="tabpanel" aria-labelledby="nav-trust-tab">
-        <p>{{lyrics[2].replace('\n', '<br>')}}</p>
-      </div>
-      <div class="tab-pane fade text-center" id="nav-sadness" role="tabpanel" aria-labelledby="nav-sadness-tab">
-        <p>{{lyrics[3].replace('\n', '<br>')}}</p>
-      </div>
-      <div class="tab-pane fade text-center" id="nav-fear" role="tabpanel" aria-labelledby="nav-fear-tab">
-        <p>{{lyrics[4].replace('\n', '<br>')}}</p>
-      </div>
-      <div class="tab-pane fade text-center" id="nav-surprise" role="tabpanel" aria-labelledby="nav-surprise-tab">
-        <p>{{lyrics[5].replace('\n', '<br>')}}</p>
-      </div>
-      <div class="tab-pane fade text-center" id="nav-anger" role="tabpanel" aria-labelledby="nav-anger-tab">
-        <p>{{lyrics[6].replace('\n', '<br>')}}</p>
-      </div>
-      <div class="tab-pane fade text-center" id="nav-disgust" role="tabpanel" aria-labelledby="nav-disgust-tab">
-        <p>{{lyrics[7].replace('\n', '<br>')}}</p>
-      </div>
-      {% endautoescape %}
     </div>
-    {% endblock %}
   </div>
 
   <div id="emotion-chart" class="text-center"></div>
 
-  <div id="sentiment-chart" class="text-center">
-
-  </div>
+  <div id="sentiment-chart" class="text-center"></div>
 
   <!-- D3.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
@@ -180,7 +183,6 @@
     var x = d3.scaleBand()
       .range([0, width])
       .domain(sentiment_axes.map(function(d) {
-        console.log(d.axis)
         return d.axis;
       }))
       .padding(0.2);
