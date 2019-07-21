@@ -1,3 +1,11 @@
+p, h1, h2, h3, h4, h5, h6 {
+  font-family: 'Raleway', serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-shadow: 1px 1px 1px #999;
+}
+
 .navbar, .card {
   -webkit-box-shadow: 0 8px 6px -6px #999;
   -moz-box-shadow: 0 8px 6px -6px #999;
@@ -6,6 +14,10 @@
 
 nav {
   background-color: #9dd7ef;
+}
+
+.tab {
+  text-indent: 1em;
 }
 
 .card-header, nav * {
@@ -21,11 +33,11 @@ nav *:hover {
 
 #info-section {
   background-color: black;
+  margin-bottom: 1em;
 }
 
 #info-section * {
   margin: 1em;
-  padding: 1em;
   color: white;
 }
 
