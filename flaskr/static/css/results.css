@@ -1,5 +1,22 @@
-nav * {
+.navbar, .card {
+  -webkit-box-shadow: 0 8px 6px -6px #999;
+  -moz-box-shadow: 0 8px 6px -6px #999;
+  box-shadow: 0 8px 6px -6px #999;
+}
+
+nav {
+  background-color: #9dd7ef;
+}
+
+.card-header, nav * {
+  text-transform: uppercase;
+  word-spacing: 1px;
+  color: white;
   padding: .25em;
+}
+
+nav *:hover {
+  color: black;
 }
 
 #info-section {
