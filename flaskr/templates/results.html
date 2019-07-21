@@ -41,15 +41,39 @@
 
   <div id="info-section" class="media">
     <img id="album-img" src={{album_img}} class="align-self-center mr-3">
-    <div class="media-body">
-      <h6>{{songTitle}}</h6>
-      <h6>{{artistName}}</h6>
+    <div>
+      <h5 style="color: #9dd7ef">Title</h5>
+      <p class="tab">
+        {{songTitle}}
+      </p>
+      <h5 style="color: #9dd7ef">Artist</h5>
+      <p class="tab">
+        {{artistName}}
+      </p>
     </div>
   </div>
 
-  <br>
+  <div id="emotion-chart" class="text-center">
+    <h5>Emotion Chart</h5>
+  </div>
 
-  <div id="lyrics-section" class="container-fluid">
+  <div id="sentiment-chart" class="text-center">
+    <h5>Sentiment Chart</h5>
+  </div>
+
+  <!-- D3.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="../static/js/RadarChart.js"></script>
+  <script src="../static/js/MakeChart.js"></script>
+  <script>
+    var agg_emotions = JSON.parse("{{agg_emotions}}".replace(/&#34;/g, "\"").replace(/&#39;/g, "\""))
+
+    makeChart(agg_emotions)
+  </script>
+
+  <div id="lyrics-section" class="container-fluid text-center">
+    <h5>Lyrics Analyzer</h5>
     {% block body %}
     <div class="card">
       <div class="card-header">
@@ -100,20 +124,6 @@
     </div>
   </div>
 
-  <div id="emotion-chart" class="text-center"></div>
-
-  <div id="sentiment-chart" class="text-center"></div>
-
-  <!-- D3.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
-  <script src="https://d3js.org/d3.v4.js"></script>
-  <script src="../static/js/RadarChart.js"></script>
-  <script src="../static/js/MakeChart.js"></script>
-  <script>
-    var agg_emotions = JSON.parse("{{agg_emotions}}".replace(/&#34;/g, "\"").replace(/&#39;/g, "\""))
-
-    makeChart(agg_emotions)
-  </script>
 </body>
 
 </html>
