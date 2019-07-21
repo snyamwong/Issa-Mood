@@ -8,38 +8,42 @@
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="../static/css/foundation.min.css">
   <link rel="stylesheet" href="../static/css/foundation-icons.css">
+  <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="../static/css/results.css">
 </head>
 
 <body>
-  <nav>
-    <div class="top-bar">
-      <div class="top-bar-left">
-        <ul class="menu">
-          <li class="menu-text">Issa-Mood</li>
-        </ul>
-      </div>
-      <div class="top-bar-right">
-        <ul class="menu icons icons-top">
-          <li><a href="/home"><i class="fi-home"></i><span>Home</span></a>
-          <li><a href="#"><i class="fi-laptop"></i><span>Research</span></a></li>
-          <li><a href="https://github.com/tinyamwong/Issa-Mood"><i class="fi-social-github"></i><span>Github</span></a></li>
-        </ul>
-      </div>
+  <nav class="navbar navbar-expand-md">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2"></div>
+    <div class="mx-auto order-0">
+      <a href="/home" class="navbar-brand mx-auto">Issa-Mood</a>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a href="/home"><i class="fi-home"><span>Home</span></i></a>
+        </li>
+        <li class="nav-item">
+          <a href="#"><i class="fi-laptop"><span>Research</span></i></a>
+        </li>
+        <li class="nav-item">
+          <a href="https://github.com/tinyamwong/Issa-Mood"><i class="fi-social-github"><span>Github</span></i></a>
+        </li>
+      </ul>
+    </div>
     </div>
   </nav>
 
   <div id="info-section" class="media">
     <img id="album-img" src={{album_img}} class="align-self-center mr-3">
     <div class="media-body">
-      <h4>{{songTitle}}</h4>
-      <h5>By: {{artistName}}</h5>
+      <h6>{{songTitle}}</h6>
+      <h6>{{artistName}}</h6>
     </div>
   </div>
 
@@ -47,9 +51,9 @@
 
   <div id="lyrics-section" class="container-fluid">
     {% block body %}
-    <div class="card scrollbar-ripe-malinka">
+    <div class="card">
       <div class="card-header">
-        <nav>
+        <nav class="">
           <div class="nav nav-pills nav-justified" id="nav-tab" role="tablist">
             <a class="nav-item nav-link active" id="nav-anticipation-tab" data-toggle="tab" href="#nav-anticipation" role="tab" aria-controls="nav-anticipation" aria-selected="true">Anticipation</a>
             <a class="nav-item nav-link" id="nav-joy-tab" data-toggle="tab" href="#nav-joy" role="tab" aria-controls="nav-joy" aria-selected="false">Joy</a>
@@ -65,7 +69,7 @@
       <div class="card-body">
         <div class="tab-content" id="nav-tabContent">
           {% autoescape false %}
-          <div class="tab-pane fade show active text-center force-overflow" id="nav-anticipation" role="tabpanel" aria-labelledby="nav-anticipation-tab">
+          <div class="tab-pane fade show active text-center" id="nav-anticipation" role="tabpanel" aria-labelledby="nav-anticipation-tab">
             <p>{{lyrics[0].replace('\n', '<br>')}}</p>
           </div>
           <div class="tab-pane fade text-center" id="nav-joy" role="tabpanel" aria-labelledby="nav-joy-tab">
