@@ -45,9 +45,9 @@ class Genius:
                 break
         # parse through hits until the artist_name is the same as the hits stored artist name
         for hit in json["response"]["hits"]:
-            if hit["result"]["primary_artist"]["name"] == artist_name:
+            if hit["result"]["primary_artist"]["name"].lower() == artist_name.lower():
                 # stores method variable to be sent later to results page
-                self.artist = artist_name
+                self.artist = artist_name = hit["result"]["primary_artist"]["name"]
                 self.song = hit["result"]["title"]
                 self.album_img = hit["result"]["header_image_thumbnail_url"]
                 song_info = hit
