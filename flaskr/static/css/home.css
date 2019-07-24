@@ -38,8 +38,16 @@ section {
 
 .card h1, h2, h3, h4, h5, h6, label {
   color: white;
+  padding: .25em;
 }
 
 #form {
   margin-top: 6em;
+}
+
+body {
+    background-image: url('https://media2.giphy.com/media/aw6CWyyLQ8WyRuktxR/giphy.gif?cid=790b76115d37c2f539526e3967c1b3ad&rid=giphy.gif'), url('https://media0.giphy.com/media/fo2dhRTmaULbStoFkX/giphy.gif?cid=790b76115d375f186a7955686b1bbfb0&rid=giphy.gif');
+    background-size: auto, auto;
+    background-position: center center, center top;
+    background-repeat: no-repeat, repeat;
 }
