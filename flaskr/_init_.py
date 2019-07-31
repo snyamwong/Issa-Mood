@@ -5,7 +5,6 @@ import json
 import time
 from counter_util import counter_to_dict
 from flask import Flask, flash, render_template, request, redirect
-from db import Database
 from forms import Song_search
 from genius import Genius
 from lyrics import Lyrics
@@ -48,7 +47,6 @@ def create_app(test_config=None):
     @app.route('/results')
     def search_results(search):
         genius = Genius()
-        database = Database()
         # this is the stored value for dropdown either: Song Name or Song Name & Artist
         search_type = search.data['select']
         # Name of the song to search for
