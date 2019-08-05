@@ -18,6 +18,16 @@ https://foundation.zurb.com/
 
 Download the files, and move them into static/css directory.
 
+## Setting up Postgre
+
+Download pgadmin/postgre
+
+Once you download pgadmin, set up a super user
+
+Go into Servers -> Databases -> and create new database named issamood with user named "postgres" and pw "issamood"
+
+In order to see all data in the tables go into Schemas -> Tables -> and then right click song_info table and click View/Edit Data
+
 ## Running Instructions
 
 Install Python 3.7.3
